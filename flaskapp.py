@@ -12,7 +12,7 @@ from tensorflow.keras import backend, layers
 import os
 
 app = Flask(__name__, template_folder='templates')
-app.config['SECRET_KEY'] = 'kjqè73JJhsjhvahel'
+app.config['SECRET_KEY'] = 'kjqÃ¨73JJhsjhvahel'
 
 
 class FixedDropout(layers.Dropout):
@@ -25,7 +25,7 @@ class FixedDropout(layers.Dropout):
         return tuple(noise_shape)
 
 
-model = load_model('/workspace/Project-template/model.h5',
+model = load_model('/workspaces/WebInterfaceWithFlask/model.h5',
                    custom_objects={'FixedDropout': FixedDropout(rate=0.4)})
 
 model.make_predict_function()
@@ -38,10 +38,10 @@ d = ast.literal_eval(data)
 #TO DO 
 #Try to fill the predict_label function , where we will load image , transform it to an array , reshape it and predict the class of the image
 def predict_label(img_path):
-    i = #add image.load_img method and take as argument the image path and the target image size (240,240)
-    i = #transform the image to an array of pixels
-    i = # reshape the image to (1, 240, 240, 3) size
-    p = #add model.predict 
+    i = image.load_img(img_path, target_size=(240, 240))
+    i = image.img_to_array(i)
+    i = i.reshape((1, 240, 240, 3))
+    p = model.predict(i)
     in_max = np.where(p[0] == np.max(p))
     return d[in_max[0][0]]
 
